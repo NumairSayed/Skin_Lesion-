@@ -30,7 +30,10 @@ def main():
 
             if not (batch % 300) and batch :
                 print(f"Epoch {epoch+1}, Batch {batch}, Loss: {loss.item()}")
-
+        # Save model weights every 10 iterations after 20 epochs
+        if epoch >= 20:
+            torch.save(model.state_dict(), f"model_epoch{epoch+1}.pth")
+            print(f"Saved model weights after epoch {epoch+1}")
             
 
     # Training loop
@@ -38,11 +41,6 @@ def main():
     for epoch in range(epochs):
         print(f"Epoch {epoch+1}\n-------------------------------")
         train(train_dataloader, model, loss_fn, optimizer, epoch)
-        # Save model weights every 10 iterations after 20 epochs
-        if epoch >= 20:
-            torch.save(model.state_dict(), f"model_epoch{epoch+1}.pth")
-            print(f"Saved model weights after epoch {epoch+1}")
-
     print("Training complete")
 
 if __name__ == "__main__":
